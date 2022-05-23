@@ -44,16 +44,45 @@ class MatrixCalculator {
         return calculatedMatrix
     }
 
-    private fun flipMatrix(matrix: MutableList<MutableList<Double>>) : MutableList<MutableList<Double>> {
-        val flippedMatrix = mutableListOf<MutableList<Double>>()
+    fun diagonalTranspose(matrix: MutableList<MutableList<Double>>) : MutableList<MutableList<Double>> {
+        val transposedMatrix = mutableListOf<MutableList<Double>>()
         for (column in 0 until matrix[0].size) {
             val matrixRow = mutableListOf<Double>()
             for (row in 0 until matrix.size) {
                 matrixRow.add(matrix[row][column])
             }
-            flippedMatrix.add(matrixRow)
+            transposedMatrix.add(matrixRow)
         }
-        return flippedMatrix
+        return transposedMatrix
+    }
+
+    fun sideDiagonalTranspose(matrix: MutableList<MutableList<Double>>) : MutableList<MutableList<Double>> {
+        return verticalTranspose(horizontalTranspose(diagonalTranspose(matrix)))
+    }
+
+
+    fun verticalTranspose(matrix: MutableList<MutableList<Double>>) : MutableList<MutableList<Double>> {
+        val transposedMatrix = mutableListOf<MutableList<Double>>()
+        for (row in 0 until matrix.size) {
+            val matrixRow = mutableListOf<Double>()
+            for (column in matrix[row].size - 1 downTo 0) {
+                matrixRow.add(matrix[row][column])
+            }
+            transposedMatrix.add(matrixRow)
+        }
+        return transposedMatrix
+    }
+
+    fun horizontalTranspose(matrix: MutableList<MutableList<Double>>) : MutableList<MutableList<Double>> {
+        val transposedMatrix = mutableListOf<MutableList<Double>>()
+        for (row in matrix.size - 1 downTo 0) {
+            val matrixRow = mutableListOf<Double>()
+            for (column in 0 until matrix[row].size) {
+                matrixRow.add(matrix[row][column])
+            }
+            transposedMatrix.add(matrixRow)
+        }
+        return transposedMatrix
     }
 
 }

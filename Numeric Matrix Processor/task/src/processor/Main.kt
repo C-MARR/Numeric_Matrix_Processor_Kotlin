@@ -43,16 +43,55 @@ fun menu() {
         print("""1. Add matrices
 2. Multiply matrix by a constant
 3. Multiply matrices
+4. Transpose matrix
 0. Exit
 Your choice: """)
         when (readln()) {
             "1" -> optionAddMatrices()
             "2" -> optionMultiplyMatrixByConstant()
             "3" -> optionMultiplyMatrices()
+            "4" -> optionTransposeMatrix()
             "0" -> return
             else -> println("The operation cannot be performed.")
         }
         println()
+    }
+}
+
+fun optionTransposeMatrix() {
+    val error = "The operation cannot be performed."
+    println("""
+1. Main diagonal
+2. Side diagonal
+3. Vertical line
+4. Horizontal line
+Your choice: """)
+    val choice = readln()
+    if (!choice.matches("[1234]".toRegex())) {
+        println(error)
+        return
+    }
+    val isValidRowsColumns: Regex = "\\d+ \\d+".toRegex()
+    val matrixCalculator = MatrixCalculator()
+    print("Enter size of matrix: ")
+    val input = readln()
+    if (!input.matches(isValidRowsColumns)) {
+        println(error)
+        return
+    }
+    val (rows, columns) = input.split(" ").map { it.toInt() }
+    println("Enter matrix:")
+    val matrix = newMatrix(rows, columns)
+    if (matrix.isEmpty()) {
+        println(error)
+        return
+    }
+    println("The result is:")
+    when (choice) {
+        "1" -> printMatrix(matrixCalculator.diagonalTranspose(matrix))
+        "2" -> printMatrix(matrixCalculator.sideDiagonalTranspose(matrix))
+        "3" -> printMatrix(matrixCalculator.verticalTranspose(matrix))
+        "4" -> printMatrix(matrixCalculator.horizontalTranspose(matrix))
     }
 }
 
